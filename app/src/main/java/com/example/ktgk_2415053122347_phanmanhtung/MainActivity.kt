@@ -46,7 +46,6 @@ class MainActivity : AppCompatActivity() {
                     putExtra("TENKHOANCHI",tenkhoanchi_347)
                     putExtra("SOTIEN",sotien_347)
                     putExtra("GHICHU",ghichu_347)
-
             }
                 startActivity(intent)
            }
