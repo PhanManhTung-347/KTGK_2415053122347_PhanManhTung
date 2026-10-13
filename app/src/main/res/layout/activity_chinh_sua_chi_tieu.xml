@@ -35,6 +35,13 @@
             android:layout_marginTop="10dp"
             android:id="@+id/edtGhiChu_347"
             android:textSize="25sp"/>
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rdoTrangThai"
+            android:textSize="25sp"
+            android:text="Trạng thái"
+            android:checked="false"/>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
