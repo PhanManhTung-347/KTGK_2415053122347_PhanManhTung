@@ -26,12 +26,8 @@ class ChinhSuaChiTieuActivity : AppCompatActivity() {
             edtGhiChu347.setText("$ghichu_347")
         }
         binding.btnHuyChinhSua347.setOnClickListener {
-            Toast.makeText(this, "Huy chinh sua thanh cong", Toast.LENGTH_SHORT).show()
-            with(binding){
-                edtTenKhoanChi347.setText("$tenkhoanchi_347")
-                edtSoTien347.setText("$sotien_347")
-                edtGhiChu347.setText("$ghichu_347")
-            }
+            setResult(RESULT_CANCELED)
+            finish()
         }
         binding.btnChinhSua347.setOnClickListener {
             val newten_347 = binding.edtTenKhoanChi347.text.trim().toString()

@@ -5,9 +5,9 @@ data class KhoanChi(val maKhoanChi_347:Int, val tenKhoanChi_347:String, val soTi
         return "Khoan chi "+ "Ma khoan chi: $maKhoanChi_347" + "-Ten khoan chi: $tenKhoanChi_347" +"-So tien: $soTien_347"
     }
     fun laSoTienHopLe(): Boolean{
-        if (soTien_347.isFinite() && soTien_347>0.0)
-            return true
-        else
+        if (!soTien_347.isFinite() || soTien_347 <=0.0)
             return false
+        else
+            return true
     }
 }

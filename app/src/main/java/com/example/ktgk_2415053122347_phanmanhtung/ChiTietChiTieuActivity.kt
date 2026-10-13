@@ -11,9 +11,7 @@ import com.example.ktgk_2415053122347_phanmanhtung.databinding.ActivityChiTietCh
 class ChiTietChiTieuActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChiTietChiTieuBinding
-    private var tenkhoanchi_347 = ""
-    private var sotien_347 = 0.0
-    private var ghichu_347= ""
+    private var khoanchi: KhoanChi?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -22,10 +20,10 @@ class ChiTietChiTieuActivity : AppCompatActivity() {
 
         supportActionBar?.title =
             "Phan Manh Tung - 2415053122347 - Quản lý chi tiêu cá nhân"
-        tenkhoanchi_347 = intent.getStringExtra("TENKHOANCHI").toString()
-        sotien_347 = intent.getDoubleExtra("SOTIEN",-1.0)
-        ghichu_347 = intent.getStringExtra("GHICHU")?:"Chưa cập nhật"
-        if (tenkhoanchi_347.isNullOrBlank()) {
+        val tenKhoanChi_347 = intent.getStringExtra("TENKHOANCHI").toString()
+        val soTien_347 = intent.getDoubleExtra("SOTIEN",-1.0)
+        val ghiChu_347 = intent.getStringExtra("GHICHU")?:"Chưa cập nhật"
+        if (tenKhoanChi_347.isNullOrBlank()) {
             Toast.makeText(
                 this,
                 "Tên khoản chi không hợp lệ",
@@ -34,8 +32,8 @@ class ChiTietChiTieuActivity : AppCompatActivity() {
             finish()
             return
         }
-
-        if (!sotien_347.isFinite() || sotien_347 <= 0.0) {
+        else
+        if (!soTien_347.isFinite() || soTien_347 <= 0.0) {
             Toast.makeText(
                 this,
                 "Số tiền không hợp lệ",
@@ -44,29 +42,46 @@ class ChiTietChiTieuActivity : AppCompatActivity() {
             finish()
             return
         }
-        with(binding){
-            tvTenKhoanChi347.text = "Tên khoản chi: $tenkhoanchi_347"
-            tvSoTien347.text = "Số tiền: $sotien_347"
-            tvGhiChu347.text = "Ghi chú: $ghichu_347"
+        else {
+            khoanchi = KhoanChi(1,"$tenKhoanChi_347", soTien_347, "$ghiChu_347",false)
+            khoanchi?.let{ kc->
+                with(binding){
+                    tvTenKhoanChi347.text = "Tên khoản chi: ${kc.tenKhoanChi_347}"
+                    tvSoTien347.text = "Số tiền: ${kc.soTien_347}"
+                    tvGhiChu347.text = "Ghi chú: ${kc.ghiChu_347}"
+                }
+            }
         }
+
         binding.btnQuayVe347.setOnClickListener {
+            khoanchi?.let { kc->
+                val resultIntent = Intent().apply {
+                    putExtra("TENKHOANCHI",kc.tenKhoanChi_347)
+                    putExtra("SOTIEN",kc.soTien_347)
+                    putExtra("GHICHU",kc.ghiChu_347)
+                }
+                setResult(RESULT_OK,resultIntent)
+            }
             finish()
         }
         binding.btnChinhSua347.setOnClickListener {
+            khoanchi?.let { kc->
                 val intent = Intent(this, ChinhSuaChiTieuActivity::class.java).apply {
-                    putExtra("TENKHOANCHI",tenkhoanchi_347)
-                    putExtra("SOTIEN",sotien_347)
-                    putExtra("GHICHU",ghichu_347)
+                    putExtra("TENKHOANCHI",kc.tenKhoanChi_347)
+                    putExtra("SOTIEN",kc.soTien_347)
+                    putExtra("GHICHU",kc.ghiChu_347)
                 }
                 chinhSuaChiTieuLauncher.launch(intent)
+            }
         }
     }
     private val chinhSuaChiTieuLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         result ->
         if (result.resultCode == Activity.RESULT_OK){
-            tenkhoanchi_347 = result.data?.getStringExtra("TENKHOANCHI").toString()
-            sotien_347  = result.data?.getDoubleExtra("SOTIEN",-1.0)?:-1.0
-            ghichu_347 = result.data?.getStringExtra("GHICHU").toString()
+            val tenkhoanchi_347 = result.data?.getStringExtra("TENKHOANCHI")?:""
+            val sotien_347  = result.data?.getDoubleExtra("SOTIEN",-1.0)?:-1.0
+            val ghichu_347 = result.data?.getStringExtra("GHICHU")?:""
+            khoanchi= khoanchi?.copy(tenKhoanChi_347 = tenkhoanchi_347, soTien_347 = sotien_347, ghiChu_347 = ghichu_347)
             with(binding){
                 tvTenKhoanChi347.text = "Tên khoản chi: $tenkhoanchi_347"
                 tvSoTien347.text = "Số tiền: $sotien_347"
