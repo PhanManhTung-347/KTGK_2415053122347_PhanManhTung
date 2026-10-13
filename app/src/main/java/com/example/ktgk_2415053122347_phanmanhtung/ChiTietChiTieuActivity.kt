@@ -1,5 +1,6 @@
 package com.example.ktgk_2415053122347_phanmanhtung
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -46,6 +47,21 @@ class ChiTietChiTieuActivity : AppCompatActivity() {
         }
         binding.btnQuayVe347.setOnClickListener {
             finish()
+        }
+        binding.btnChinhSua347.setOnClickListener {
+            if (tenkhoanchi_347.isBlank() || sotien_347 == null || sotien_347 <0.0)
+            {
+                Toast.makeText(this, "Vui long them khoan chi truoc khi xem chi tiet", Toast.LENGTH_SHORT).show()
+            }
+            else
+            {
+                val intent = Intent(this, ChiTietChiTieuActivity::class.java).apply {
+                    putExtra("TENKHOANCHI",tenkhoanchi_347)
+                    putExtra("SOTIEN",sotien_347)
+                    putExtra("GHICHU",ghichu_347)
+                }
+                startActivity(intent)
+            }
         }
     }
 }
