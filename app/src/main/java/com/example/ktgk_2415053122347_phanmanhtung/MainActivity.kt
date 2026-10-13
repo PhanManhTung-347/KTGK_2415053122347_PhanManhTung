@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
             val tenKhoanChi_347 = binding.edtTenKhoanChi347.text.trim().toString()
             val soTien_347 = binding.edtSoTien347.text.toString().trim().toDoubleOrNull()?:-1.0
             val ghiChu_347 = binding.edtGhiChu347.text.toString()
+            val trangthai_347 = binding.rdoTrangThai.isChecked
             if (tenKhoanChi_347.isBlank())
             {
                 binding.edtTenKhoanChi347.error ="Ten khoan chi khong hop le"
@@ -47,7 +48,7 @@ class MainActivity : AppCompatActivity() {
                     binding.edtSoTien347.error = "So tien khong hop le"
                 else
                 {
-                    khoanChiMoi = KhoanChi(1,"$tenKhoanChi_347", soTien_347, "$ghiChu_347",false)
+                    khoanChiMoi = KhoanChi(1,"$tenKhoanChi_347", soTien_347, "$ghiChu_347",trangthai_347)
                     Toast.makeText(this, "Them khoan chi thanh cong", Toast.LENGTH_SHORT).show()
                 }
         }
@@ -63,6 +64,7 @@ class MainActivity : AppCompatActivity() {
                         putExtra("TENKHOANCHI",kc.tenKhoanChi_347)
                         putExtra("SOTIEN",kc.soTien_347)
                         putExtra("GHICHU",kc.ghiChu_347)
+                        putExtra("TRANGTHAI",kc.daThanhToan_347)
                     }
                     chiTietChiTieu.launch(intent)
                 }
